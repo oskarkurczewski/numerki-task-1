@@ -3,7 +3,7 @@ package program;
 import java.util.Scanner;
 
 public class Algorithm {
-    public void euler(double left, double right, boolean estimation, double f) {
+    public void euler(double left, double right, boolean estimation, int f) {
         Scanner scanner = new Scanner(System.in);
         int i = 0, iterations = Integer.MAX_VALUE;
         double x, epsilon = -1.0;

@@ -22,4 +22,19 @@ public class Functions {
         return pow(Math.E, x) - 4;
     }
 
+    double comp_expo_poly (double x) {
+
+        return exponential(polynomial(x));
+    }
+
+    double comp_poly_expo (double x) {
+
+        return polynomial(exponential(x));
+    }
+
+    double comp_expo_tri (double x) {
+
+        return exponential(trigonometric(x));
+    }
+
 }
