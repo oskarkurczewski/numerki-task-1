@@ -46,8 +46,7 @@ public class Algorithms {
             }
         }
 
-        System.out.println("\nMetoda siecznych: Koniec szukania rozwiazania. Miejsce zerowe w x = ");
-        System.out.println(x);
+        System.out.println("\nMetoda siecznych: Koniec szukania rozwiazania. Miejsce zerowe w x = " + x);
     }
 
     public static void bisection(double left, double right, double epsilon, int iterations, int f) {
@@ -95,7 +94,6 @@ public class Algorithms {
             }
         }
 
-        System.out.println("\nBisekcja: Koniec szukania rozwiazania. Miejsce zerowe w x = ");
-        System.out.println(x);
+        System.out.println("\nBisekcja: Koniec szukania rozwiazania. Miejsce zerowe w x = " + x);
     }
 }

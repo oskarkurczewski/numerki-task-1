@@ -1,5 +1,6 @@
 package program;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
@@ -8,12 +9,12 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         Greeter greeter = new Greeter();
 
-        double epsilon;
-        int iterations;
-        int f;
+        double epsilon = 0;
+        int iterations = 0;
+        int f = 0;
         int choice;
-        double left;
-        double right;
+        double left = 0;
+        double right = 0;
         int con = 1;
 
         while (con == 1) {
@@ -26,13 +27,33 @@ public class App {
             System.out.println("4 - h(f(x))\n");
             System.out.println("5 - f(h(x)\n");
             System.out.println("6 - h(g(x)\n");
-            f = scanner.nextInt();
+            try {
+                f = scanner.nextInt();
+                if (f > 6 || f < 1) {
+                    System.out.println("Przecież tu nie było funkcji " + f);
+                    return;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("To chyba nie integer?\n");
+                return;
+            }
 
-            System.out.println("Podaj dolny przedział:\n");
-            left = scanner.nextDouble();
+            System.out.println("Podaj dolny przedział (z przecinkiem, nie z kropką):\n");
+            try {
+                left = scanner.nextDouble();
+            } catch (InputMismatchException e) {
+                System.out.println("Prawdopodobnie odano liczbę zmiennoprzecinkową z kropką. Panowie, tak się nie robi, wychodzimy.\n");
+                return;
+            }
 
-            System.out.println("Podaj górny przedział:\n");
-            right = scanner.nextDouble();
+            System.out.println("Podaj górny przedział (z przecinkiem, nie z kropką):\n");
+            try {
+                right = scanner.nextDouble();
+            } catch (InputMismatchException e) {
+                System.out.println("Prawdopodobnie odano liczbę zmiennoprzecinkową z kropką. Panowie, tak się nie robi, wychodzimy.\n");
+                return;
+            }
+            
             if (right <= left) {
                 while (right <= left) {
                     System.out.println("Prawa strona przedziału powinna być większa niż lewa! Podaj górny przedział jeszcze raz, i proszę, kurde, żeby był tym razem dobry:\n");
@@ -46,21 +67,32 @@ public class App {
             choice = scanner.nextInt();
 
             if (choice == 1) {
-                System.out.println("Podaj epsilon:");
-                epsilon = scanner.nextDouble();
+                System.out.println("Podaj epsilon (z przecinkiem, nie z kropką):");
+                try {
+                    epsilon = scanner.nextDouble();
+                } catch (InputMismatchException e) {
+                    System.out.println("Prawdopodobnie podano liczbę zmiennoprzecinkową z kropką. Panowie, tak się nie robi, wychodzimy.\n");
+                    return;
+                }
                 iterations = Integer.MAX_VALUE;
 
             } else {
                 System.out.println("Podaj liczbe iteracji:");
                 epsilon = - 1.0;
-                iterations = scanner.nextInt();
+                try {
+                    iterations = scanner.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.println("To chyba nie integer?\n");
+                    return;
+                }
+
             }
 
             Algorithms.euler(left, right, epsilon, iterations, f);
             Algorithms.bisection(left, right, epsilon, iterations, f);
 
             System.out.println("\n\nKontynuować?\n");
-            System.out.println("0 - nie");
+            System.out.println("Dowolna liczba niebędąca 1 - nie");
             System.out.println("1 - tak");
             con = scanner.nextInt();
         }
