@@ -18,6 +18,12 @@ public class App {
         plot.set("xlabel", "'y'");
         plot.set("xzeroaxis", "");
         plot.set("zeroaxis", "");
+//        plot.addPlot("sin(x)");
+//        double[][] a= {{0,0}};
+//        plot.addPlot(a);
+//        plot.set("xrange","[-10:10]");
+//        plot.plot();
+
 
         double epsilon = 0;
         int iterations = 0;
@@ -63,7 +69,7 @@ public class App {
                 System.out.println("Prawdopodobnie odano liczbę zmiennoprzecinkową z kropką. Panowie, tak się nie robi, wychodzimy.\n");
                 return;
             }
-            
+
             if (right <= left) {
                 while (right <= left) {
                     System.out.println("Prawa strona przedziału powinna być większa niż lewa! Podaj górny przedział jeszcze raz, i proszę, kurde, żeby był tym razem dobry:\n");
@@ -120,6 +126,9 @@ public class App {
                     {xBisection,0}
             };
             plot.addPlot(points);
+            String range = "["+left+":"+right+"]";
+            plot.set("xrange",range);
+            plot.set("yrange","[-20:20]");
             plot.plot();
 
             System.out.println("\n\nKontynuować?\n");
