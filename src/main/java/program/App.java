@@ -11,7 +11,7 @@ public class App {
 
         double epsilon = 0;
         int iterations = 0;
-        int f = 0;
+        int f = 1;
         int choice;
         double left = 0;
         double right = 0;
@@ -76,7 +76,7 @@ public class App {
                 }
                 iterations = Integer.MAX_VALUE;
 
-            } else {
+            } else if (choice == 2) {
                 System.out.println("Podaj liczbe iteracji:");
                 epsilon = - 1.0;
                 try {
@@ -86,13 +86,15 @@ public class App {
                     return;
                 }
 
+            } else {
+                System.out.println("Podano zły numer.\n");
             }
 
-            Algorithms.euler(left, right, epsilon, iterations, f);
-            Algorithms.bisection(left, right, epsilon, iterations, f);
+            Algorithms.euler(left, right, epsilon, iterations, f, choice);
+            Algorithms.bisection(left, right, epsilon, iterations, f, choice);
 
             System.out.println("\n\nKontynuować?\n");
-            System.out.println("Dowolna liczba niebędąca 1 - nie");
+            System.out.println("0 - nie");
             System.out.println("1 - tak");
             con = scanner.nextInt();
         }
