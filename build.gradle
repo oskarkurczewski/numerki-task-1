@@ -11,5 +11,5 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-
+    implementation group: 'com.panayotis.javaplot', name: 'javaplot', version: '0.5.0'
 }

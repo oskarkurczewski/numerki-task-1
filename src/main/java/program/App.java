@@ -25,8 +25,8 @@ public class App {
             System.out.println("2 - g(x) = sin(1/2 x) + 1\n");
             System.out.println("3 - h(x) = e^x - 4\n");
             System.out.println("4 - h(f(x))\n");
-            System.out.println("5 - f(h(x)\n");
-            System.out.println("6 - h(g(x)\n");
+            System.out.println("5 - f(h(x))\n");
+            System.out.println("6 - h(g(x))\n");
             try {
                 f = scanner.nextInt();
                 if (f > 6 || f < 1) {
@@ -92,6 +92,8 @@ public class App {
 
             Algorithms.euler(left, right, epsilon, iterations, f, choice);
             Algorithms.bisection(left, right, epsilon, iterations, f, choice);
+
+
 
             System.out.println("\n\nKontynuować?\n");
             System.out.println("0 - nie");

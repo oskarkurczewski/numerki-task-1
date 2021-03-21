@@ -1,7 +1,7 @@
 package program;
 
 public class Algorithms {
-    public static void euler(double left, double right, double epsilon, int iterations, int f, int choice) {
+    public static double euler(double left, double right, double epsilon, int iterations, int f, int choice) {
         int i = 0;
         double x = 0;
 
@@ -100,9 +100,10 @@ public class Algorithms {
         }
 
         System.out.println("\nMetoda siecznych: Koniec szukania rozwiazania. Miejsce zerowe w x = " + x);
+        return x;
     }
 
-    public static void bisection(double left, double right, double epsilon, int iterations, int f, int choice) {
+    public static double bisection(double left, double right, double epsilon, int iterations, int f, int choice) {
         int i = 0;
         double x = 0;
 
@@ -202,5 +203,6 @@ public class Algorithms {
         }
 
         System.out.println("\nBisekcja: Koniec szukania rozwiazania. Miejsce zerowe w x = " + x);
+        return x;
     }
 }
