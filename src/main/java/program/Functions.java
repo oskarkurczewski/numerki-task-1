@@ -4,6 +4,13 @@ import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 
 public class Functions {
+    static String polynomial = "x**3+2*x**2-5*x+3";
+    static String trigonometric = "sin(x/2)+1";
+    static String exponential = "2**x-4"; //tutaj 2 trzeba zmienic na to e ae jeszcze nie wiem jak gnuplot nazywa to e
+    static String comp_expo_poly = "";
+    static String comp_poly_expo = "";
+    static String comp_expo_tri = "";
+
     public static double polynomial (double x) {
         // f(x)
         // y = x^3 + 2x^2 - 5x +3

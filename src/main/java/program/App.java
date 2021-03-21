@@ -2,12 +2,22 @@ package program;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import com.panayotis.gnuplot.JavaPlot;
+import com.panayotis.gnuplot.plot.DataSetPlot;
+import com.panayotis.gnuplot.style.PlotStyle;
+import com.panayotis.gnuplot.style.Style;
 
 public class App {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Greeter greeter = new Greeter();
+
+        JavaPlot plot = new JavaPlot("D:\\gnuplot\\bin\\gnuplot.exe");
+        plot.set("xlabel", "'x'");
+        plot.set("xlabel", "'y'");
+        plot.set("xzeroaxis", "");
+        plot.set("zeroaxis", "");
 
         double epsilon = 0;
         int iterations = 0;
@@ -90,10 +100,27 @@ public class App {
                 System.out.println("Podano zły numer.\n");
             }
 
-            Algorithms.euler(left, right, epsilon, iterations, f, choice);
-            Algorithms.bisection(left, right, epsilon, iterations, f, choice);
+            double xEuler = Algorithms.euler(left, right, epsilon, iterations, f, choice);
+            double xBisection = Algorithms.bisection(left, right, epsilon, iterations, f, choice);
 
+            switch (f) {
+                case (1):
+                    plot.addPlot(Functions.polynomial);
+                    break;
+                case (2):
+                    plot.addPlot(Functions.trigonometric);
+                    break;
+                case (3):
+                    plot.addPlot(Functions.exponential);
+                    break;
+            }
 
+            double[][] points = {
+                    {xEuler,0},
+                    {xBisection,0}
+            };
+            plot.addPlot(points);
+            plot.plot();
 
             System.out.println("\n\nKontynuować?\n");
             System.out.println("0 - nie");
