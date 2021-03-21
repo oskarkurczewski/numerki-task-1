@@ -25,6 +25,8 @@ public class Functions {
         return pow(Math.E, x) - 4;
     }
 
+    // todo: policzyć i dodać w komentarzach, jakie poniżej są miejsca zerowe, bo mi się nie chciało xD
+
     public static double comp_expo_poly (double x) {
         // f(h(x))
         return exponential(polynomial(x));

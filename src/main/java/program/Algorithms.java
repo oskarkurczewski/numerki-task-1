@@ -1,12 +1,9 @@
 package program;
 
-import java.util.Scanner;
-
 public class Algorithms {
     public static void euler(double left, double right, double epsilon, int iterations, int f) {
-        Scanner scanner = new Scanner(System.in);
         int i = 0;
-        double x;
+        double x = 0;
 
         while ((Math.abs(right - left) > epsilon) && (i < iterations) && (left != right)) {
             switch (f) {
@@ -48,12 +45,14 @@ public class Algorithms {
                     break;
             }
         }
+
+        System.out.println("\nMetoda siecznych: Koniec szukania rozwiazania. Miejsce zerowe w x = ");
+        System.out.println(x);
     }
 
     public static void bisection(double left, double right, double epsilon, int iterations, int f) {
-        Scanner scanner = new Scanner(System.in);
         int i = 0;
-        double x;
+        double x = 0;
 
         while ((Math.abs(right - left) > epsilon) && (i < iterations) && (left != right)) {
             switch (f) {
@@ -95,5 +94,8 @@ public class Algorithms {
                     break;
             }
         }
+
+        System.out.println("\nBisekcja: Koniec szukania rozwiazania. Miejsce zerowe w x = ");
+        System.out.println(x);
     }
 }
