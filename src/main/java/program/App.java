@@ -9,20 +9,23 @@ import com.panayotis.gnuplot.style.Style;
 
 public class App {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         Greeter greeter = new Greeter();
+        Algorithms algorithms = new Algorithms();
+        Utils fun;
 
-        JavaPlot plot = new JavaPlot("D:\\gnuplot\\bin\\gnuplot.exe");
+        // JavaPlot plot = new JavaPlot("D:\\gnuplot\\bin\\gnuplot.exe");
+        JavaPlot plot = new JavaPlot("C:\\Program Files\\gnuplot\\bin\\gnuplot.exe");
         plot.set("xlabel", "'x'");
         plot.set("xlabel", "'y'");
         plot.set("xzeroaxis", "");
         plot.set("zeroaxis", "");
-//        plot.addPlot("sin(x)");
-//        double[][] a= {{0,0}};
-//        plot.addPlot(a);
-//        plot.set("xrange","[-10:10]");
-//        plot.plot();
+        //        plot.addPlot("sin(x)");
+        //        double[][] a= {{0,0}};
+        //        plot.addPlot(a);
+        //        plot.set("xrange","[-10:10]");
+        //        plot.plot();
 
 
         double epsilon = 0;
@@ -48,6 +51,16 @@ public class App {
                 if (f > 6 || f < 1) {
                     System.out.println("Przecież tu nie było funkcji " + f);
                     return;
+                } else {
+                    fun = switch (f) {
+                        case 1 -> new Polynomial();
+                        case 2 -> new Trigonometric();
+                        case 3 -> new Exponential();
+                        case 4 -> new Comp_poly_expo();
+                        case 5 -> new Comp_expo_poly();
+                        case 6 -> new Comp_expo_tri();
+                        default -> throw new Exception("Coś poszło nie tak!");
+                    };
                 }
             } catch (InputMismatchException e) {
                 System.out.println("To chyba nie integer?\n");
@@ -106,29 +119,18 @@ public class App {
                 System.out.println("Podano zły numer.\n");
             }
 
-            double xEuler = Algorithms.euler(left, right, epsilon, iterations, f, choice);
-            double xBisection = Algorithms.bisection(left, right, epsilon, iterations, f, choice);
-
-            switch (f) {
-                case (1):
-                    plot.addPlot(Functions.polynomial);
-                    break;
-                case (2):
-                    plot.addPlot(Functions.trigonometric);
-                    break;
-                case (3):
-                    plot.addPlot(Functions.exponential);
-                    break;
-            }
+            double xEuler = algorithms.euler(left, right, epsilon, iterations, fun);
+            double xBisection = algorithms.bisection(left, right, epsilon, iterations, fun);
 
             double[][] points = {
                     {xEuler,0},
                     {xBisection,0}
             };
+
             plot.addPlot(points);
             String range = "["+left+":"+right+"]";
-            plot.set("xrange",range);
-            plot.set("yrange","[-20:20]");
+            plot.set("xrange", range);
+            plot.set("yrange", "[-20:20]");
             plot.plot();
 
             System.out.println("\n\nKontynuować?\n");
