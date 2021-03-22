@@ -4,8 +4,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import com.panayotis.gnuplot.JavaPlot;
 import com.panayotis.gnuplot.plot.DataSetPlot;
+import com.panayotis.gnuplot.plot.Plot;
 import com.panayotis.gnuplot.style.PlotStyle;
 import com.panayotis.gnuplot.style.Style;
+
 
 public class App {
 
@@ -15,21 +17,8 @@ public class App {
         Algorithms algorithms = new Algorithms();
         Utils fun;
 
-        // JavaPlot plot = new JavaPlot("D:\\gnuplot\\bin\\gnuplot.exe");
-        JavaPlot plot = new JavaPlot("C:\\Program Files\\gnuplot\\bin\\gnuplot.exe");
-        plot.set("xlabel", "'x'");
-        plot.set("xlabel", "'y'");
-        plot.set("xzeroaxis", "");
-        plot.set("zeroaxis", "");
-        //        plot.addPlot("sin(x)");
-        //        double[][] a= {{0,0}};
-        //        plot.addPlot(a);
-        //        plot.set("xrange","[-10:10]");
-        //        plot.plot();
-
-
         double epsilon = 0;
-        int iterations = 0;
+        int iterations = 100;
         int f = 1;
         int choice;
         double left = 0;
@@ -99,35 +88,56 @@ public class App {
                 System.out.println("Podaj epsilon (z przecinkiem, nie z kropką):");
                 try {
                     epsilon = scanner.nextDouble();
+                    System.out.println("\nepsilon = " + epsilon + "\n");
+                    iterations = Integer.MAX_VALUE;
                 } catch (InputMismatchException e) {
                     System.out.println("Prawdopodobnie podano liczbę zmiennoprzecinkową z kropką. Panowie, tak się nie robi, wychodzimy.\n");
                     return;
                 }
-                iterations = Integer.MAX_VALUE;
 
             } else if (choice == 2) {
                 System.out.println("Podaj liczbe iteracji:");
-                epsilon = - 1.0;
                 try {
                     iterations = scanner.nextInt();
+                    System.out.println("\n" + iterations + " iteracji.\n");
+                    epsilon = -1.0;
                 } catch (InputMismatchException e) {
                     System.out.println("To chyba nie integer?\n");
                     return;
                 }
-
             } else {
                 System.out.println("Podano zły numer.\n");
             }
 
-            double xEuler = algorithms.euler(left, right, epsilon, iterations, fun);
             double xBisection = algorithms.bisection(left, right, epsilon, iterations, fun);
+            double xEuler = algorithms.euler(left, right, epsilon, iterations, fun);
 
-            double[][] points = {
-                    {xEuler,0},
-                    {xBisection,0}
+            double [][] points = {
+                    {xEuler, fun.calc(xEuler)},
+                    {xBisection, fun.calc(xBisection)}
             };
 
+            double [][] chart = new double[500][2];
+
+            for (int i = 0; i < chart.length; i++) {
+                chart[i][0] = ((i - 250) * 1.0) / 15;
+                chart[i][1] = fun.calc( ((i - 250) * 1.0) / 15);
+            }
+
+            // JavaPlot plot = new JavaPlot("D:\\gnuplot\\bin\\gnuplot.exe");
+            JavaPlot plot = new JavaPlot("C:\\Program Files\\gnuplot\\bin\\gnuplot.exe");
+            PlotStyle chartStyle = new PlotStyle();
+            chartStyle.setStyle(Style.LINES);
+            DataSetPlot chartPlot = new DataSetPlot(chart);
+            chartPlot.setPlotStyle(chartStyle);
+
+            plot.set("xlabel", "'x'");
+            plot.set("xlabel", "'y'");
+            plot.set("xzeroaxis", "");
+            plot.set("zeroaxis", "");
+
             plot.addPlot(points);
+            plot.addPlot(chartPlot);
             String range = "["+left+":"+right+"]";
             plot.set("xrange", range);
             plot.set("yrange", "[-20:20]");
