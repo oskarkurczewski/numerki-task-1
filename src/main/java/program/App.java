@@ -46,8 +46,8 @@ public class App {
                         case 1 -> new Polynomial();
                         case 2 -> new Trigonometric();
                         case 3 -> new Exponential();
-                        case 4 -> new Comp_poly_expo();
-                        case 5 -> new Comp_expo_poly();
+                        case 4 -> new Comp_expo_poly();
+                        case 5 -> new Comp_poly_expo();
                         case 6 -> new Comp_expo_tri();
                         default -> throw new Exception("Coś poszło nie tak!");
                     };
