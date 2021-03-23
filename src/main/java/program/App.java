@@ -25,6 +25,7 @@ public class App {
         double right = 0;
         int con = 1;
 
+
         while (con == 1) {
 
             System.out.println("\n\n" + greeter.authorInfo() + "\n\n");
@@ -109,13 +110,22 @@ public class App {
                 System.out.println("Podano zły numer.\n");
             }
 
-            double xBisection = algorithms.bisection(left, right, epsilon, iterations, fun);
-            double xEuler = algorithms.euler(left, right, epsilon, iterations, fun);
+            // JavaPlot plot = new JavaPlot("D:\\gnuplot\\bin\\gnuplot.exe");
+            JavaPlot plot = new JavaPlot("C:\\Program Files\\gnuplot\\bin\\gnuplot.exe");
+            PlotStyle chartStyle = new PlotStyle();
+            chartStyle.setStyle(Style.LINES);
 
-            double [][] points = {
-                    {xEuler, fun.calc(xEuler)},
-                    {xBisection, fun.calc(xBisection)}
-            };
+            if (fun.calc(left) * fun.calc(right) < 0) {
+                double xBisection = algorithms.bisection(left, right, epsilon, iterations, fun);
+                double xEuler = algorithms.euler(left, right, epsilon, iterations, fun);
+                double [][] points = {
+                        {xEuler, fun.calc(xEuler)},
+                        {xBisection, fun.calc(xBisection)}
+                };
+                plot.addPlot(points);
+            } else {
+                System.out.println("Brak miejsca zerowego w danym przedziale bądź istnienie więcej niż jednego miejsca zerowego.\n");
+            }
 
             double [][] chart = new double[500][2];
 
@@ -124,10 +134,6 @@ public class App {
                 chart[i][1] = fun.calc( ((i - 250) * 1.0) / 15);
             }
 
-            // JavaPlot plot = new JavaPlot("D:\\gnuplot\\bin\\gnuplot.exe");
-            JavaPlot plot = new JavaPlot("C:\\Program Files\\gnuplot\\bin\\gnuplot.exe");
-            PlotStyle chartStyle = new PlotStyle();
-            chartStyle.setStyle(Style.LINES);
             DataSetPlot chartPlot = new DataSetPlot(chart);
             chartPlot.setPlotStyle(chartStyle);
 
@@ -136,7 +142,6 @@ public class App {
             plot.set("xzeroaxis", "");
             plot.set("zeroaxis", "");
 
-            plot.addPlot(points);
             plot.addPlot(chartPlot);
             String range = "["+left+":"+right+"]";
             plot.set("xrange", range);
